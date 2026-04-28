@@ -6,7 +6,7 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-REPO_URL="https://github.com"
+REPO_URL="https://github.com/alxgrish/Website"
 TARGET_DIR="Website"
 
 echo -e "${BLUE}=== Синхронизация с GitHub ===${NC}"
