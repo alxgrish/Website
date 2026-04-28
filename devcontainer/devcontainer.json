@@ -1,0 +1,18 @@
+{
+	"name": "Ultimate PHP Stack",
+	"image": "alpine:latest",
+	"remoteUser": "root",
+	"postCreateCommand": "apk update && apk add apache2 php83 php83-apache2 php83-sqlite3 php83-pdo_sqlite php83-mysqli php83-pdo_mysql php83-mbstring php83-gd php83-xml php83-curl php83-session php83-tokenizer sqlite mariadb mariadb-client composer github-cli bash && ln -sf /usr/bin/php83 /usr/bin/php && sed -i 's|/var/www/localhost/htdocs|/workspaces/Website/WebSite/Birds|g' /etc/apache2/httpd.conf && sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/httpd.conf && chmod -R 755 /workspaces/Website/WebSite/Birds && mysql_install_db --user=mysql --datadir=/var/lib/mysql && (mysqld_safe --datadir='/var/lib/mysql' & sleep 5 && mysql -e \"CREATE DATABASE IF NOT EXISTS app_db; CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON app_db.* TO 'admin'@'localhost'; FLUSH PRIVILEGES;\")",
+	"postStartCommand": "httpd && (mysqld_safe --datadir='/var/lib/mysql' &)",
+	"forwardPorts": [80, 3306],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"bmewburn.vscode-intelephense-client",
+				"alexcvzz.vscode-sqlite",
+				"mtxr.sqltools",
+				"mtxr.sqltools-driver-mysql"
+			]
+		}
+	}
+}
