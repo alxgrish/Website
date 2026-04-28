@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - ExoticBirds</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <h1 class="logo">🦜 ExoticBirds</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.php">Главная</a></li>
+                    <li><a href="index.php#catalog">Каталог</a></li>
+                    <li><a href="contacts.php" class="active">Контакты</a></li>
+                    <li><a href="cart.php" class="cart-link">Корзина (<span id="cart-count">0</span>)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="contacts-page">
+        <div class="container">
+            <h1>Свяжитесь с нами</h1>
+            <div class="contacts-grid">
+                <div class="contact-info">
+                    <h3>Наши контакты</h3>
+                    <p><strong>Телефон:</strong> +7 (999) 999-99-99</p>
+                    <p><strong>Email:</strong> @exoticbirds.ru</p>
+                    <p><strong>Адрес:</strong> г. Москва, ул. Птичья, д. 1</p>
+                    <p><strong>Часы работы:</strong> Ежедневно с 10:00 до 22:00</p>
+                </div>
+                <div class="contact-form">
+                    <h3>Напишите нам</h3>
+                    <form id="contact-form">
+                        <label for="name">Ваше имя</label>
+                        <input type="text" id="name" name="name" required>
+                        
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                        
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" name="message" required></textarea>
+                        
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 ExoticBirds. Все права защищены.</p>
+            <p>Продажа экзотических птиц с заботой о вас и ваших питомцах.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contact-form')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Спасибо! Ваше сообщение отправлено. ');
+            e.target.reset();
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

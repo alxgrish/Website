@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExoticBirds - Магазин экзотических птиц</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <h1 class="logo"><img src="https://i.pinimg.com/originals/dc/05/3b/dc053b0045d3c0fafe74352b46b9fbbe.gif" alt="" style="vertical-align:middle" width='70px'> ExoticBirds</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Главная</a></li>
+                    <li><a href="#catalog">Каталог</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                    <li><a href="cart.html" class="cart-link">Корзина (<span id="cart-count">0</span>)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Яркие краски в вашем доме</h2>
+                <p>Продажа здоровых и ручных экзотических птиц с документами и доставкой по всей стране. Поможем выбрать идеального пернатого друга!</p>
+                <a href="#catalog" class="btn btn-primary">Смотреть каталог</a>
+            </div>
+        </section>
+
+        <section id="catalog" class="catalog">
+            <div class="container">
+                <h2>Наши птицы</h2>
+                
+                <!-- Блок фильтрации -->
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="parrot">Попугаи</button>
+                    <button class="filter-btn" data-filter="canary">Канарейки</button>
+                    <button class="filter-btn" data-filter="other">Другие</button>
+                </div>
+
+                <!-- Сетка с карточками птиц -->
+                <div class="product-grid" id="product-grid">
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>Почему выбирают нас?</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🐣</div>
+                        <h3>Здоровье птиц</h3>
+                        <p>Все птицы имеют ветеринарные паспорта и привиты.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🚚</div>
+                        <h3>Безопасная доставка</h3>
+                        <p>Специальные контейнеры и термоусловия для комфорта птиц.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💬</div>
+                        <h3>Поддержка 24/7</h3>
+                        <p>Мы на связи и готовы помочь с любым вопросом после покупки.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ExoticBirds. Все права защищены.</p>
+            <p>Продажа экзотических птиц с заботой о вас и ваших питомцах.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
