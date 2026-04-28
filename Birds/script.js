@@ -1,6 +1,4 @@
-// === РАСШИРЕННЫЙ КАТАЛОГ: более 30 видов экзотических птиц ===
 const birdsData = [
-    // === КРУПНЫЕ ПОПУГАИ ===
     {
         id: 1,
         name: "Ара Сине-желтый",
@@ -47,7 +45,6 @@ const birdsData = [
         rating: 0
     },
     
-    // === СРЕДНИЕ ПОПУГАИ ===
     {
         id: 6,
         name: "Жако (Серый попугай)",
@@ -103,7 +100,6 @@ const birdsData = [
         rating: 0
     },
     
-    // === МЕЛКИЕ ПОПУГАИ ===
     {
         id: 12,
         name: "Неразлучник Фишера",
@@ -159,7 +155,6 @@ const birdsData = [
         rating: 0
     },
     
-    // === ПЕВЧИЕ ПТИЦЫ (КАНАРЕЙКИ) ===
     {
         id: 18,
         name: "Канарейка желтая",
@@ -206,7 +201,6 @@ const birdsData = [
         rating: 0
     },
     
-    // === ЭКЗОТИЧЕСКИЕ ПТИЦЫ (ДРУГИЕ) ===
     {
         id: 23,
         name: "Амадин зебровый",
@@ -307,10 +301,8 @@ const birdsData = [
         rating: 0
     }
 ];
-// === Глобальные переменные ===
 let cart = JSON.parse(localStorage.getItem('birdCart')) || [];
 
-// === Функции для работы с корзиной ===
 function saveCart() {
     localStorage.setItem('birdCart', JSON.stringify(cart));
     updateCartCounter();
@@ -347,12 +339,10 @@ function addToCart(productId) {
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
     saveCart();
-    renderCartPage(); // Перерисовать корзину, если мы на странице корзины
+    renderCartPage();
 }
 
-// === Функции для отображения ===
 
-// Функция создания рейтинга (звездочек)
 function createRatingHTML(productId, currentRating) {
     let starsHtml = '';
     for (let i = 1; i <= 5; i++) {
@@ -362,7 +352,6 @@ function createRatingHTML(productId, currentRating) {
     return `<div class="rating" data-product="${productId}">${starsHtml}</div>`;
 }
 
-// Загрузка и обновление рейтинга из localStorage
 function loadRatings() {
     birdsData.forEach(bird => {
         const savedRating = localStorage.getItem(`rating_${bird.id}`);
@@ -380,7 +369,6 @@ function saveRating(productId, value) {
     }
 }
 
-// Рендер сетки товаров на главной
 function renderProductGrid(filter = 'all') {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
@@ -396,7 +384,7 @@ function renderProductGrid(filter = 'all') {
 
     grid.innerHTML = filteredBirds.map(bird => {
         const ratingStars = createRatingHTML(bird.id, bird.rating);
-        // Определяем русское название категории
+        
         let categoryName = 'Другая';
         if (bird.category === 'parrot') categoryName = 'Попугай';
         if (bird.category === 'canary') categoryName = 'Канарейка';
@@ -416,7 +404,6 @@ function renderProductGrid(filter = 'all') {
         `;
     }).join('');
 
-    // Добавляем обработчики для кнопок "В корзину"
     document.querySelectorAll('.add-to-cart').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -447,7 +434,6 @@ function renderProductGrid(filter = 'all') {
     });
 }
 
-// Рендер страницы корзины
 function renderCartPage() {
     const cartContainer = document.querySelector('.cart-items');
     const summaryContainer = document.querySelector('.cart-summary');
@@ -474,7 +460,6 @@ function renderCartPage() {
         `;
     }).join('');
 
-    // Обработчики удаления
     document.querySelectorAll('.cart-item-remove').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const id = parseInt(btn.dataset.id);
@@ -482,7 +467,6 @@ function renderCartPage() {
         });
     });
 
-    // Итоговая сумма
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     summaryContainer.innerHTML = `
         <div class="cart-total">Итого: ${total.toLocaleString()} ₽</div>
@@ -491,23 +475,15 @@ function renderCartPage() {
 
     document.getElementById('checkout-btn')?.addEventListener('click', () => {
         alert('Спасибо за заказ! С вами свяжется менеджер для уточнения деталей доставки.');
-        // Здесь можно было бы очистить корзину, но для демо оставим комментарий
-        // cart = [];
-        // saveCart();
-        // renderCartPage();
     });
 }
 
-// === Инициализация и обработчики событий ===
 document.addEventListener('DOMContentLoaded', () => {
-    // Обновляем счетчик корзины
     updateCartCounter();
 
-    // Рендер сетки на главной
     if (document.getElementById('product-grid')) {
         renderProductGrid();
 
-        // Фильтры
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
