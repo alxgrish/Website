@@ -25,11 +25,9 @@
         <div class="container">
             <h1>Ваша корзина</h1>
             <div class="cart-items">
-                <!-- Сюда будут динамически добавляться товары из корзины -->
                 <p class="empty-cart">Загрузка...</p>
             </div>
             <div class="cart-summary" style="display: none;">
-                <!-- Итог и кнопка оформления -->
             </div>
         </div>
     </main>
