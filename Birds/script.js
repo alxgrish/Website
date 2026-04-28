@@ -44,7 +44,6 @@ const birdsData = [
         image: "./images/25.webp",
         rating: 0
     },
-    
     {
         id: 6,
         name: "Жако (Серый попугай)",
@@ -99,7 +98,6 @@ const birdsData = [
         image: "./images/27.webp",
         rating: 0
     },
-    
     {
         id: 12,
         name: "Неразлучник Фишера",
@@ -154,7 +152,6 @@ const birdsData = [
         image: "./images/88.webp",
         rating: 0
     },
-    
     {
         id: 18,
         name: "Канарейка желтая",
@@ -200,7 +197,6 @@ const birdsData = [
         image: "./images/01.webp",
         rating: 0
     },
-    
     {
         id: 23,
         name: "Амадин зебровый",
@@ -277,7 +273,7 @@ const birdsData = [
         id: 31,
         name: "Сплинкс (Голый попугай)",
         category: "parrot",
-        description: " Практически без перьев на голове. Требует тепла.",
+        description: "Практически без перьев на голове. Требует тепла.",
         price: 820000,
         image: "./images/3.jpg",
         rating: 0
@@ -301,6 +297,7 @@ const birdsData = [
         rating: 0
     }
 ];
+
 let cart = JSON.parse(localStorage.getItem('birdCart')) || [];
 
 function saveCart() {
@@ -342,7 +339,6 @@ function removeFromCart(productId) {
     renderCartPage();
 }
 
-
 function createRatingHTML(productId, currentRating) {
     let starsHtml = '';
     for (let i = 1; i <= 5; i++) {
@@ -354,9 +350,9 @@ function createRatingHTML(productId, currentRating) {
 
 function loadRatings() {
     birdsData.forEach(bird => {
-        const savedRating = localStorage.getItem(`rating_${bird.id}`);
-        if (savedRating) {
-            bird.rating = parseInt(savedRating);
+        const saved = localStorage.getItem(`rating_${bird.id}`);
+        if (saved !== null) {
+            bird.rating = parseInt(saved, 10);
         }
     });
 }
@@ -373,10 +369,12 @@ function renderProductGrid(filter = 'all') {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
 
-    loadRatings();  Загружаем рейтинги перед отрисовкой
+    loadRatings();
 
-    const filteredBirds = filter === 'all' ? birdsData : birdsData.filter(b => b.category === filter);
-    
+    const filteredBirds = filter === 'all'
+        ? birdsData
+        : birdsData.filter(b => b.category === filter);
+
     if (filteredBirds.length === 0) {
         grid.innerHTML = '<p class="no-results">По вашему запросу ничего не найдено</p>';
         return;
@@ -384,11 +382,10 @@ function renderProductGrid(filter = 'all') {
 
     grid.innerHTML = filteredBirds.map(bird => {
         const ratingStars = createRatingHTML(bird.id, bird.rating);
-        
         let categoryName = 'Другая';
         if (bird.category === 'parrot') categoryName = 'Попугай';
         if (bird.category === 'canary') categoryName = 'Канарейка';
-        
+
         return `
             <div class="product-card" data-category="${bird.category}">
                 <img src="${bird.image}" alt="${bird.name}" class="product-image" loading="lazy">
@@ -405,28 +402,23 @@ function renderProductGrid(filter = 'all') {
     }).join('');
 
     document.querySelectorAll('.add-to-cart').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', e => {
             e.stopPropagation();
-            const id = parseInt(btn.dataset.id);
+            const id = parseInt(btn.dataset.id, 10);
             addToCart(id);
         });
     });
 
     document.querySelectorAll('.rating .star').forEach(star => {
-        star.addEventListener('click', (e) => {
+        star.addEventListener('click', e => {
             e.stopPropagation();
-            const productId = parseInt(star.dataset.product);
-            const value = parseInt(star.dataset.value);
-         
-            const starsContainer = star.closest('.rating');
-            starsContainer.querySelectorAll('.star').forEach((s, index) => {
-                if (index < value) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
+            const productId = parseInt(star.dataset.product, 10);
+            const value = parseInt(star.dataset.value, 10);
+            const container = star.closest('.rating');
+            container.querySelectorAll('.star').forEach((s, idx) => {
+                if (idx < value) s.classList.add('active');
+                else s.classList.remove('active');
             });
-            
             saveRating(productId, value);
         });
     });
@@ -442,36 +434,35 @@ function renderCartPage() {
         summaryContainer.style.display = 'none';
         return;
     }
+
     summaryContainer.style.display = 'block';
 
-    cartContainer.innerHTML = cart.map(item => {
-        return `
-            <div class="cart-item" data-id="${item.id}">
-                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-                <div class="cart-item-details">
-                    <p class="cart-item-name">${item.name}</p>
-                    <p class="cart-item-price">${item.price.toLocaleString()} ₽ x ${item.quantity}</p>
-                </div>
-                <p class="cart-item-price">${(item.price * item.quantity).toLocaleString()} ₽</p>
-                <button class="cart-item-remove" data-id="${item.id}">Удалить</button>
+    cartContainer.innerHTML = cart.map(item => `
+        <div class="cart-item" data-id="${item.id}">
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+            <div class="cart-item-details">
+                <p class="cart-item-name">${item.name}</p>
+                <p class="cart-item-price">${item.price.toLocaleString()} ₽ x ${item.quantity}</p>
             </div>
-        `;
-    }).join('');
+            <p class="cart-item-price">${(item.price * item.quantity).toLocaleString()} ₽</p>
+            <button class="cart-item-remove" data-id="${item.id}">Удалить</button>
+        </div>
+    `).join('');
 
     document.querySelectorAll('.cart-item-remove').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const id = parseInt(btn.dataset.id);
+        btn.addEventListener('click', () => {
+            const id = parseInt(btn.dataset.id, 10);
             removeFromCart(id);
         });
     });
 
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = cart.reduce((sum, it) => sum + it.price * it.quantity, 0);
     summaryContainer.innerHTML = `
         <div class="cart-total">Итого: ${total.toLocaleString()} ₽</div>
         <button class="checkout-btn" id="checkout-btn">Оформить заказ</button>
     `;
 
-    document.getElementById('checkout-btn')?.addEventListener('click', () => {
+    document.getElementById('checkout-btn').addEventListener('click', () => {
         alert('Спасибо за заказ! С вами свяжется менеджер для уточнения деталей доставки.');
     });
 }
@@ -483,16 +474,14 @@ document.addEventListener('DOMContentLoaded', () => {
         renderProductGrid();
 
         document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                const filter = btn.dataset.filter;
-                renderProductGrid(filter);
+                renderProductGrid(btn.dataset.filter);
             });
         });
     }
 
-    
     if (document.querySelector('.cart-items')) {
         renderCartPage();
     }
