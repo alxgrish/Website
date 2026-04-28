@@ -373,7 +373,7 @@ function renderProductGrid(filter = 'all') {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
 
-    loadRatings(); // Загружаем рейтинги перед отрисовкой
+    loadRatings();  Загружаем рейтинги перед отрисовкой
 
     const filteredBirds = filter === 'all' ? birdsData : birdsData.filter(b => b.category === filter);
     
@@ -412,14 +412,12 @@ function renderProductGrid(filter = 'all') {
         });
     });
 
-    // Добавляем обработчики для звезд рейтинга
     document.querySelectorAll('.rating .star').forEach(star => {
         star.addEventListener('click', (e) => {
             e.stopPropagation();
             const productId = parseInt(star.dataset.product);
             const value = parseInt(star.dataset.value);
-            
-            // Обновляем визуал звезд
+         
             const starsContainer = star.closest('.rating');
             starsContainer.querySelectorAll('.star').forEach((s, index) => {
                 if (index < value) {
@@ -494,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Рендер корзины, если мы на странице cart.html
+    
     if (document.querySelector('.cart-items')) {
         renderCartPage();
     }
