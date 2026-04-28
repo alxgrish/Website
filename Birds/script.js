@@ -440,7 +440,7 @@ function renderCartPage() {
     if (!cartContainer || !summaryContainer) return;
 
     if (cart.length === 0) {
-        cartContainer.innerHTML = '<p class="empty-cart">Корзина пуста. <a href="index.html">Перейти к покупкам</a></p>';
+        cartContainer.innerHTML = '<p class="empty-cart">Корзина пуста. <a href="index.php">Перейти к покупкам</a></p>';
         summaryContainer.style.display = 'none';
         return;
     }
